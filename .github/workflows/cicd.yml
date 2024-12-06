@@ -25,13 +25,8 @@ jobs:
            with:
                 username: ${{ secrets.DOCKERHUB_USERNAME }}
                 password: ${{ secrets.DOCKERHUB_PASSWORD }}
-         - name: ls
-           run: ls
-         - name: ls the jar
-           run: ls jarstaging/com/valaxy/demo-workshop/2.1.2/
-         - name: Push to Docker Hub
-           uses: docker/build-push-action@v4
-           with:
-                push: true
-                tags: mosama25/java-app:latest
+         - name: build image
+           run: docker build . -t mosama25/java-app:latest
+         - name: push image
+           run: docker push mosama25/java-app:latest
 
