@@ -15,4 +15,4 @@ jobs:
          - name: test the app
            run: mvn surefire-report:report
          - name: ls the app
-           run: ls -Rla      
+           run: ls -Ra./targets      
