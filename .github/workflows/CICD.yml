@@ -20,6 +20,10 @@ jobs:
 
          - name: SonarQube Scan
            uses: sonarsource/sonarqube-scan-action@master
+           with:
+            args: >
+              -Dsonar.projectKey=devops-project-2
+              -Dsonar.organization=devops-project-cicd-2
            env:
              SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }} //Sonar Token generated 
              SONAR_HOST_URL: "https://sonarcloud.io/" 
