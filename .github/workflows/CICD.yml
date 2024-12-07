@@ -18,10 +18,14 @@ jobs:
          - name: build image
            run: docker build . -t mosama25/java-app:v$GITHUB_RUN_NUMBER.0
 
-         - name: SonarQube Scan
-           uses: sonarsource/sonarqube-scan-action@master
+      # SonarCloud Analysis
+         - name: Run SonarCloud Scan
+           uses: SonarSource/sonarcloud-github-action@v2
+           with:
+             args: >
+              -Dsonar.projectKey=devops-project-2
+              -Dsonar.organization=DevOps-Project-2
            env:
-             SONAR_TOKEN: ${{ secrets.SONAR_TOKEN}} //Sonar Token generated 
-             SONAR_HOST_URL: "https://sonarcloud.io/"       
+              SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
 
 
