@@ -24,7 +24,7 @@ jobs:
            with:
              args: >
               -Dsonar.projectKey=devops-project-2
-              -Dsonar.organization=DevOps-Project-2
+              -Dsonar.organization=devops-project-cicd-2
            env:
               SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
 
