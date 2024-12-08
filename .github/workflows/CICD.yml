@@ -7,6 +7,9 @@ jobs:
     CICD:
      name: CICD
      runs-on: ubuntu-latest
+     env:
+      GIT_COMMIT: ${{ github.sha }}
+      BUILD_ID: ${{ github.run_id }}
      steps:
          - name: Checkout
            uses: actions/checkout@v2    
@@ -37,12 +40,6 @@ jobs:
            env:
              SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
              SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }} #OPTIONAL
-
-           # Set up environment variables
-         - name: Set Environment Variables
-          env:
-            GIT_COMMIT: ${{ github.sha }}
-            BUILD_ID: ${{ github.run_id }}
 
         # Configure JFrog CLI using the JFrog Action
          - name: Configure JFrog CLI
