@@ -14,9 +14,13 @@ jobs:
            run: mvn clean deploy -Dmaven.test.skip=true
          - name: test the app
            run: mvn surefire-report:report
-        
-         - name: build image
-           run: docker build . -t mosama25/java-app:v$GITHUB_RUN_NUMBER.0
+      
+         - name: Install Node.js
+           uses: actions/setup-node@v3
+           with:
+             node-version: '16'
+        #  - name: build image
+        #    run: docker build . -t mosama25/java-app:v$GITHUB_RUN_NUMBER.0
 
          - name: Run SonarCloud Scan
            uses: sonarsource/sonarqube-scan-action@master
