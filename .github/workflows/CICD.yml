@@ -15,14 +15,7 @@ jobs:
          - name: test the app
            run: mvn surefire-report:report
       
-         - name: Install SonarScanner
-           run: |
-             wget https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-4.8.0.2856-linux.zip
-             unzip sonar-scanner-cli-4.8.0.2856-linux.zip
-             sudo mv sonar-scanner-4.8.0.2856-linux /opt/sonar-scanner
-             echo "PATH=$PATH:/opt/sonar-scanner/bin" >> $GITHUB_ENV
-
-         - name: Run SonarCloud Scan
-           run : sonar-scanner
+         - name: SonarQube Scan
+           uses: sonarsource/sonarqube-scan-action@v2.1.0 # Ex: v2.1.0, See the latest version at https://github.com/marketplace/actions/official-sonarqube-scan
 
 
