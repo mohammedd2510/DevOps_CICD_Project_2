@@ -3,7 +3,7 @@ kind: Deployment
 metadata:
   labels:
     app: Java-app
-  name: Java-app-Deployment
+  name: java-app-Deployment
 spec:
   replicas: 1
   selector:
