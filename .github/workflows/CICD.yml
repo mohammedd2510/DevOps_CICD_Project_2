@@ -8,7 +8,7 @@ jobs:
      name: CICD
      runs-on: ubuntu-latest
      container:
-      image: openjdk:11 # Use the official JDK 11 container image
+      image: maven:3.8.8-openjdk-11 # Official Maven + JDK 11 image
      steps:
          - name: Checkout
            uses: actions/checkout@v2    
