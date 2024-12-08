@@ -15,7 +15,7 @@ jobs:
          - name: test the app
            run: mvn surefire-report:report
       
-  - name: SonarQube Scan
-      uses: sonarsource/sonarqube-scan-action@4.1.0  # Ex: v2.1.0, See the latest version at https://github.com/marketplace/actions/official-sonarqube-scan
+         - name: SonarQube Scan
+           uses: sonarsource/sonarqube-scan-action@4.1.0   # Ex: v2.1.0, See the latest version at https://github.com/marketplace/actions/official-sonarqube-scan
 
 
