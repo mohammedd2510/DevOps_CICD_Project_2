@@ -22,11 +22,13 @@ jobs:
              sudo mv sonar-scanner-4.8.0.2856-linux /opt/sonar-scanner
              echo "PATH=$PATH:/opt/sonar-scanner/bin" >> $GITHUB_ENV
 
-         - name: Run SonarCloud Scan
+         - name: Run SonarScanner
            env:
               SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-           run : sonar-scanner -Dsonar.login=$SONAR_TOKEN
-               # Check the Quality Gate status.
+              SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }} #OPTIONAL
+           run : sonar-scanner -Dsonar.login=$SONAR_TOKEN -Dsonar.host.url=$SONAR_HOST_URL
+
+
          - name: SonarQube Quality Gate check
            id: sonarqube-quality-gate-check
            uses: sonarsource/sonarqube-quality-gate-action@master
@@ -34,6 +36,50 @@ jobs:
              pollingTimeoutSec: 600
            env:
              SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-             SONAR_HOST_URL: http://44.212.36.135 #OPTIONAL
+             SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }} #OPTIONAL
+
+           # Set up environment variables
+         - name: Set Environment Variables
+          env:
+            GIT_COMMIT: ${{ github.sha }}
+            BUILD_ID: ${{ github.run_id }}
+
+        # Configure JFrog CLI using the JFrog Action
+         - name: Configure JFrog CLI
+           uses: jfrog/setup-jfrog-cli@v2
+           with:
+             version: latest
+             jfrog-url: ${{ secrets.ARTIFACTORY_URL }}
+             jfrog-access-token: ${{ secrets.ARTIFACTORY_TOKEN }}
+
+        # Publish JAR to Artifactory
+         - name: Publish JAR to Artifactory
+           run: |
+            echo '<--------------- Jar Publish Started --------------->'
+
+            # Define variables
+            PROPERTIES="buildid=${{ github.run_id }},commitid=${{ github.sha }}"
+            UPLOAD_SPEC=$(cat <<EOF
+            {
+              "files": [
+                {
+                  "pattern": "jarstaging/(*)",
+                  "target": "devops-java-app-libs-release/{1}",
+                  "flat": false,
+                  "props": "$PROPERTIES",
+                  "exclusions": ["*.sha1", "*.md5"]
+                }
+              ]
+            }
+            EOF
+            )
+
+            # Write the upload spec to a file
+            echo "$UPLOAD_SPEC" > upload-spec.json
+
+            # Upload files using JFrog CLI
+            jfrog rt u --spec=upload-spec.json
+            
+            echo '<--------------- Jar Publish Ended --------------->'      
 
 
