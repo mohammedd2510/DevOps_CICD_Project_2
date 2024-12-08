@@ -7,6 +7,8 @@ jobs:
     CICD:
      name: CICD
      runs-on: ubuntu-latest
+     container:
+      image: openjdk:11 # Use the official JDK 11 container image
      steps:
          - name: Checkout
            uses: actions/checkout@v2    
@@ -15,10 +17,10 @@ jobs:
          - name: test the app
            run: mvn surefire-report:report
       
-         - name: Install Node.js
-           uses: actions/setup-node@v3
-           with:
-             node-version: '16'
+        #  - name: Install Node.js
+        #    uses: actions/setup-node@v3
+        #    with:
+        #      node-version: '16'
         #  - name: build image
         #    run: docker build . -t mosama25/java-app:v$GITHUB_RUN_NUMBER.0
 
