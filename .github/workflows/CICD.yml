@@ -44,10 +44,11 @@ jobs:
         # Configure JFrog CLI using the JFrog Action
          - name: Configure JFrog CLI
            uses: jfrog/setup-jfrog-cli@v2
-           with:
-             version: latest
-             jfrog-url: ${{ secrets.ARTIFACTORY_URL }}
-             jfrog-access-token: ${{ secrets.ARTIFACTORY_TOKEN }}
+           env:
+             JF_URL: ${{ secrets.ARTIFACTORY_URL }}
+             JF_ACCESS_TOKEN: ${{ secrets.ARTIFACTORY_TOKEN }}
+              
+     
 
         # Publish JAR to Artifactory
          - name: Publish JAR to Artifactory
@@ -62,7 +63,7 @@ jobs:
                 {
                   "pattern": "jarstaging/(*)",
                   "target": "devops-java-app-libs-release/{1}",
-                  "flat": false,
+                  "flat": "false",
                   "props": "$PROPERTIES",
                   "exclusions": ["*.sha1", "*.md5"]
                 }
