@@ -19,9 +19,8 @@ jobs:
            run: docker build . -t mosama25/java-app:v$GITHUB_RUN_NUMBER.0
 
          - name: Run SonarCloud Scan
-           uses: SonarSource/sonarcloud-github-action@v2
+           uses: SonarSource/sonar-scanner-action@master
            env:
              SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-             GITHUB_TOKEN: ${{ secrets.GITHUBTOKEN}}
 
 
