@@ -100,15 +100,15 @@ jobs:
            run: |
               docker push  ${{ secrets.JFROG_REGISTRY_URL }}/java-app-image-repo-docker/java-app:$APP_VERSION
 
-          - name: Configure AWS Credentials
-            uses: aws-actions/configure-aws-credentials@v1
-            with:
+         - name: Configure AWS Credentials
+           uses: aws-actions/configure-aws-credentials@v1
+           with:
               aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
               aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
               aws-region: us-east-1
 
-          - name: deploy to k8s
-            run: |
+         - name: deploy to k8s
+           run: |
               aws eks update-kubeconfig --region us-east-1 --name eks-cluster
               helm repo add ingress-nginx https://kubernetes.github.io/ingress-nginx
               helm repo update
