@@ -88,16 +88,16 @@ jobs:
            with:
             username: ${{secrets.JFROG_USERNAME }}
             password: ${{secrets.ARTIFACTORY_TOKEN}}  # Using Access Token as the password
-            registry: ${{ secrets.ARTIFACTORY_URL }}
+            registry: "http//${{ secrets.JFROG_REGISTRY_URL }}"
 
     # Step 4: Build the Docker image
          - name: Build Docker image
            run: |
-              docker build -t ${{ secrets.ARTIFACTORY_URL }}/java-app-image-repo-docker/java-app:$APP_VERSION .
+              docker build -t ${{ secrets.JFROG_REGISTRY_URL }}/java-app-image-repo-docker/java-app:$APP_VERSION .
 
     # Step 5: Push the Docker image to Artifactory
          - name: Push Docker image to Artifactory
            run: |
-              docker push  ${{ secrets.ARTIFACTORY_URL }}/java-app-image-repo-docker/java-app:$APP_VERSION
+              docker push  ${{ secrets.JFROG_REGISTRY_URL }}/java-app-image-repo-docker/java-app:$APP_VERSION
 
 
