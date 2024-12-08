@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: java-app-svc
+  namespace: default
+  labels:
+    app: Java-app
+spec:
+  type: ClusterIP
+  selector:
+    app: Java-app
+  ports:
+    - protocol: TCP
+      port: 8000               # Service port
+      targetPort: 8000        # Target port on the pod

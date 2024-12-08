@@ -1,0 +1,24 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: Java-app
+  name: Java-app-Deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: Java-app
+  template:
+    metadata:
+      labels:
+        app: Java-app
+    spec:
+      imagePullSecrets:
+      - name: jfrogcred 
+      containers:
+      - name: java-app
+        image: trialtduzt1.jfrog.io/java-app-image-repo-docker/java-app:2.1.2
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 8000
