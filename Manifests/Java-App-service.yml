@@ -6,10 +6,10 @@ metadata:
   labels:
     app: Java-app
 spec:
-  type: ClusterIP
+  type: LoadBalancer
   selector:
     app: Java-app
   ports:
     - protocol: TCP
-      port: 8000               # Service port
+      port: 80              # Service port
       targetPort: 8000        # Target port on the pod

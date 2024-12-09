@@ -1,1 +1,2 @@
 terraform/.terraform
+Manifests/stress_pod.yml

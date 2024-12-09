@@ -1,0 +1,23 @@
+apiVersion: monitoring.coreos.com/v1alpha1
+kind: AlertmanagerConfig
+metadata:
+  name: slack-alert
+  namespace: monitoring
+spec:
+  route:
+    receiver: 'slack'
+    repeatInterval: 30m
+    routes:
+      - matchers:
+          - name: alertname
+            value: HighCpuUsage
+        repeatInterval: 10m
+  receivers:
+    - name: 'slack'
+      slackConfigs:
+        - apiURL:
+            key: webhook
+            name: slack-secret
+          channel: '#devops-project-2'
+          sendResolved: true
+

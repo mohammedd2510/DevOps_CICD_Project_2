@@ -110,9 +110,18 @@ jobs:
          - name: deploy to k8s
            run: |
               aws eks update-kubeconfig --region us-east-1 --name eks-cluster
-              helm repo add ingress-nginx https://kubernetes.github.io/ingress-nginx
-              helm repo update
-              helm upgrade -i nginx-ingress ingress-nginx/ingress-nginx --set controller.publishService.enabled=true
+              helm repo add prometheus-community https://prometheus-community.github.io/helm-charts
+              helm update
+              helm upgrade -i prometheus prometheus-community/kube-prometheus-stack --namespace monitoring  --create-namespace 
               kubectl apply -f ./Manifests/
+              sleep 10
+
+         
+         - name: Output The Services Load Balancers URL
+           run: |
+              echo "java-app-svc LoadBalancer Url: $(kubectl get svc java-app-svc  -o jsonpath='{.status.loadBalancer.ingress[0].hostname}')"
+              for service in $(kubectl get svc -n monitoring -o=jsonpath='{.items[?(@.spec.type=="LoadBalancer")].metadata.name}' | tr ' ' '\n' | head -n 3); do   url=$(kubectl get svc -n monitoring $service -o=jsonpath='{.status.loadBalancer.ingress[0].hostname}');  echo "$service LoadBalancer Url: $url"; done
+
+
 
 

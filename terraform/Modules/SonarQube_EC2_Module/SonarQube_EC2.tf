@@ -11,6 +11,9 @@ resource "aws_instance" "Sonarqube_Ec2" {
     Name = "Sonarqube_instance"
   }
   key_name = "key"
+  user_data = file("${path.module}/Sonarqube_Script.sh")
+
+  
 }
 output "EC2_Sonarqube_id" {
   value = aws_instance.Sonarqube_Ec2.id
