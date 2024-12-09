@@ -111,7 +111,7 @@ jobs:
            run: |
               aws eks update-kubeconfig --region us-east-1 --name eks-cluster
               helm repo add prometheus-community https://prometheus-community.github.io/helm-charts
-              helm update
+              helm repo update
               helm upgrade -i prometheus prometheus-community/kube-prometheus-stack --namespace monitoring  --create-namespace 
               kubectl apply -f ./Manifests/
               sleep 10
