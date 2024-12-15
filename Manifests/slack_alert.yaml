@@ -11,7 +11,7 @@ spec:
       - matchers:
           - name: alertname
             value: HighCpuUsage
-        repeatInterval: 10m
+        repeatInterval: 5m
   receivers:
     - name: 'slack'
       slackConfigs:
